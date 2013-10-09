@@ -1,22 +1,21 @@
 
-import com.echonest.api.v4.Artist;
-import com.echonest.api.v4.EchoNestAPI;
-import com.echonest.api.v4.EchoNestException;
-import java.util.List;
+import com.echonest.api.v4.*;
 
-public class justinbiebs {
-
-    public static void main(String[] args) throws EchoNestException {
-        EchoNestAPI echoNest = new EchoNestAPI();
-        echoNest.setTraceSends(true);
-        List<Artist> artists = echoNest.searchArtists("Weezer");
-
-        if (artists.size() > 0) {
-            Artist weezer = artists.get(0);
-            System.out.println("Similar artists for " + weezer.getName());
-            for (Artist simArtist : weezer.getSimilar(10)) {
-                System.out.println("   " + simArtist.getName());
+import java.util.*;
+public class ueoaa {
+     public static void main(String[] args) throws EchoNestException {
+            EchoNestAPI echoNest = new EchoNestAPI("Y1ATIPP12LOC2U2TV");
+            echoNest.setTraceSends(true);
+             Artist jb = echoNest.newArtistByName("Justin Bieber");
+             List<News> news = jb.getNews(0, 5, true);
+            if (news.size() > 0) {
+                for (int i = 0; i< news.size(); i ++) {
+                    
+                    System.out.println(news.get(i).getName());
+                    System.out.println(news.get(i).getSummary());
+                    System.out.println();
+                }
             }
         }
-    }
+    
 }

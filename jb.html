@@ -1,0 +1,43 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HLSBDSS </title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+</head>
+        
+	<div><br><center>      
+        <button onclick="getIt()"> Go </button>
+     <div id = "articles">  </div>
+	<p>
+
+
+</body>
+<script type="text/javascript">
+ 
+	 function getIt(){
+			var url = "http://developer.echonest.com/api/v4/artist/news";
+		var args = {
+	    	api_key: 'QU4UFSKPZCJGFGW8M',
+	    	name: "justin bieber",
+	    	high_relevance : "true"
+				};
+
+		$.getJSON(url, args,
+			function(response) {
+				var length = response.response.news.length;
+				var array = [];
+				for(var i = 0; i < length; i++){
+          		array.push(response.response.news[i].name);
+          		$("#articles").append(array[i] + "<br>");
+
+   		   			}
+
+	          	}
+          	);
+
+	      }    
+                
+  
+         </script>
+		</html>
