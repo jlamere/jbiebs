@@ -22,20 +22,19 @@
 #timer
 {
 font-family:clock;
-font-size: 40px;
+font-size: 80px;
 }
 a:link {color:#000000;}      
 a:visited {color:#000000;}  /* visited link */
 a:hover {color:#5C366E;}  /* mouse over link */
 h1{
 	font-size: 40px;
-	margin-bottom: 50px;
 }
 img{
 	height: 200px;
 	margin-bottom: 50px;
 }
-#articles{
+h2{
 	padding-top: 50px;
 }
 span{
@@ -45,17 +44,25 @@ span{
 	opacity:0.4;
 
 }
+#articles{
+	padding-bottom: 50px;
+}
 </style>      
    <body onload="getIt()">
 <br><center> 
 <img id = "1"> <img id = "2"> <img id = "3"> 
-<h1> How Long Since <span>Bieber</span> Did Something Stupid? </h1>
-<br> that would be approximately
-             <div id = "timer">  </div>
+<h1> How Long Since <span>Bieber</span> Did Something Stupid?* </h1>
+<p>     * its assumed anytime an article is written about Justin, he did something stupid.
+
+<br><br><br> that would be approximately<br><br>
+             <div id = "timer">  </div><br>
              days hours minutes seconds
+             <h2> Articles </h2>
      <div id = "articles">  </div>
 	<p>
-
+<div class="bot">
+<center>by <a href="http://jlamere.github.com">jennie lamere</a> (<a href="https://twitter.com/imjen">twitter</a>) powered by <a href="http://the.echonest.com/">the echonest</a></center>
+</div>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
@@ -63,6 +70,7 @@ span{
 <script type="text/javascript">
  
 	 function getIt(){
+	 	$( "h2").text()
 	 	getPic(Math.random() * 100);
 	 	var url = "http://developer.echonest.com/api/v4/artist/news";
 		var args = {
@@ -76,13 +84,14 @@ span{
 				var length = response.response.news.length;
 				var array = [];
 				var time = [];
-				for(var i = 0; i < 5; i++){
+				for(var i = 0; i <= 3; i++){
 		      		array.push(response.response.news[i]);
 		      		time.push(response.response.news[i].date_found);
 		      		$("#articles").append("<a href =" +  array[i].url + ">"  + array[i].name + "</a><br>");
+
 					}
    		   		time = time.sort();
-   		   		getTimeDiff(time[4]);
+   		   		getTimeDiff(time[3]);
 
 	          	}
 
