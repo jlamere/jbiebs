@@ -1,0 +1,113 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>HLSBDSS </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+</head>
+  <style> 
+	@font-face
+	{
+	font-family: clock;
+	src: url(DS-DIGIT.TTF);
+	}
+
+#timer
+{
+font-family:clock;
+font-size: 40px;
+}
+img{
+	height: 200px;
+	margin-bottom: 50px;
+}
+</style>      
+   <body onload="getIt()">
+<br><center> 
+<img id = "1"> <img id = "2"> <img id = "3"> 
+             <div id = "timer">  </div>
+
+     <div id = "articles">  </div>
+	<p>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+
+<script type="text/javascript">
+ 
+	 function getIt(){
+	 	getPic(Math.random() * 100);
+	 	var url = "http://developer.echonest.com/api/v4/artist/news";
+		var args = {
+	    	api_key: 'QU4UFSKPZCJGFGW8M',
+	    	name: "justin bieber",
+	    	high_relevance : "true"
+				};
+
+		$.getJSON(url, args,
+			function(response) {
+				var length = response.response.news.length;
+				var array = [];
+				var time = [];
+				for(var i = 0; i < 5; i++){
+          		array.push(response.response.news[i].name);
+          		time.push(response.response.news[i].date_found);
+          		$("#articles").append(array[i] + "<br>");
+
+   		   			}
+   		   		time = time.sort();
+   		   		getTimeDiff(time[4]);
+
+	          	}
+
+          	);
+	      }
+	      function getTimeDiff(artDate){
+	      	var date1= new Date();
+	      	var date2 = new Date(artDate);
+	      	var dateDiff = date1 - date2;
+	      	var date = [];
+	      	date.push(checkDate(parseInt((dateDiff/(3600000 * 24)% 7))));
+	      	date.push(checkDate(parseInt((dateDiff/3600000)%24)));
+	      	date.push(checkDate(parseInt((dateDiff/60000)%60)));
+	      	date.push(checkDate(parseInt((dateDiff/1000)%60)));
+	      	$("#timer").text(date.join(":"));
+	      	t=setTimeout(function(){getTimeDiff(artDate)},500);
+	      } 
+	      function checkDate(date){
+	      	if (date < 10){
+	      		date = "0" + date;
+	      	}
+	      	return date;
+	      } 
+	      function getPic(index){
+	      	console.log(index);
+			var url = 'http://developer.echonest.com/api/v4/artist/images';
+
+   			 var args = { 
+            format:'json', 
+            api_key: "QU4UFSKPZCJGFGW8M",
+            name: 'justin bieber',
+            results: 100
+    }; 
+
+			$.getJSON(url, args,
+			function(response) {
+			for (var i = 1; i < 4; i ++){
+				$( "#" + i ).attr({
+	  				src: response.response.images[parseInt(index + i)].url,
+	  				class: "img-polaroid"
+	  			});
+			}
+
+	      })
+		}
+
+           
+  
+         </script>
+		</html>
