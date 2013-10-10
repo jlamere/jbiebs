@@ -14,22 +14,45 @@
 	font-family: clock;
 	src: url(DS-DIGIT.TTF);
 	}
-
+@font-face
+	{
+	font-family: boyfriend;
+	src: url(Gotham-Bold.ttf);
+	}
 #timer
 {
 font-family:clock;
 font-size: 40px;
 }
+a:link {color:#000000;}      
+a:visited {color:#000000;}  /* visited link */
+a:hover {color:#5C366E;}  /* mouse over link */
+h1{
+	font-size: 40px;
+	margin-bottom: 50px;
+}
 img{
 	height: 200px;
 	margin-bottom: 50px;
+}
+#articles{
+	padding-top: 50px;
+}
+span{
+	font-family: boyfriend;
+	background-color:#7719A1;
+	color: #FFFFFF;
+	opacity:0.4;
+
 }
 </style>      
    <body onload="getIt()">
 <br><center> 
 <img id = "1"> <img id = "2"> <img id = "3"> 
+<h1> How Long Since <span>Bieber</span> Did Something Stupid? </h1>
+<br> that would be approximately
              <div id = "timer">  </div>
-
+             days hours minutes seconds
      <div id = "articles">  </div>
 	<p>
 
@@ -54,11 +77,10 @@ img{
 				var array = [];
 				var time = [];
 				for(var i = 0; i < 5; i++){
-          		array.push(response.response.news[i].name);
-          		time.push(response.response.news[i].date_found);
-          		$("#articles").append(array[i] + "<br>");
-
-   		   			}
+		      		array.push(response.response.news[i]);
+		      		time.push(response.response.news[i].date_found);
+		      		$("#articles").append("<a href =" +  array[i].url + ">"  + array[i].name + "</a><br>");
+					}
    		   		time = time.sort();
    		   		getTimeDiff(time[4]);
 
@@ -85,7 +107,6 @@ img{
 	      	return date;
 	      } 
 	      function getPic(index){
-	      	console.log(index);
 			var url = 'http://developer.echonest.com/api/v4/artist/images';
 
    			 var args = { 
