@@ -8,6 +8,8 @@
         
 	<div><br><center>      
         <button onclick="getIt()"> Go </button>
+             <div id = "timer">  </div>
+
      <div id = "articles">  </div>
 	<p>
 
@@ -27,16 +29,38 @@
 			function(response) {
 				var length = response.response.news.length;
 				var array = [];
-				for(var i = 0; i < length; i++){
+				var time = [];
+				for(var i = 0; i < 5; i++){
           		array.push(response.response.news[i].name);
+          		time.push(response.response.news[i].date_found);
           		$("#articles").append(array[i] + "<br>");
 
    		   			}
+   		   		time = time.sort();
+   		   		getTimeDiff(time[4]);
 
 	          	}
-          	);
 
-	      }    
+          	);
+	      }
+	      function getTimeDiff(artDate){
+	      	var date1= new Date();
+	      	var date2 = new Date(artDate);
+	      	var dateDiff = date1 - date2;
+	      	var date = [];
+	      	date.push(checkDate(parseInt((dateDiff/(3600000 * 24)% 7))));
+	      	date.push(checkDate(parseInt((dateDiff/3600000)%24)));
+	      	date.push(checkDate(parseInt((dateDiff/60000)%60)));
+	      	date.push(checkDate(parseInt((dateDiff/1000)%60)));
+	      	$("#timer").text(date.join(":"));
+	      	t=setTimeout(function(){getTimeDiff(artDate)},500);
+	      } 
+	      function checkDate(date){
+	      	if (date < 10){
+	      		date = "0" + date;
+	      	}
+	      	return date;
+	      }   
                 
   
          </script>
